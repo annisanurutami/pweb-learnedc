@@ -27,6 +27,12 @@
                         <a href="{{ route('admin.mata-pelajaran.index') }}"
                             class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Mata
                             Pelajaran</a>
+                        <a href="{{ route('admin.guru.index') }}"
+                            class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Akun
+                            Guru</a>
+                        <a href="{{ route('admin.siswa.index') }}"
+                            class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Akun
+                            Siswa</a>
                     </div>
                     @endrole
                     </p>

@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\HariController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\MataPelajaranController;
 use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -47,6 +49,17 @@ Route::middleware(['auth', 'active'])->group(function () {
         Route::resource('kelas', KelasController::class)
             ->parameters(['kelas' => 'kelas'])
             ->except(['show']);
+
+        // A4: akun guru dan siswa (tidak dihapus, hanya dinonaktifkan)
+        Route::resource('guru', GuruController::class)
+            ->parameters(['guru' => 'guru'])
+            ->except(['show', 'destroy']);
+        Route::patch('guru/{guru}/status', [GuruController::class, 'ubahStatus'])->name('guru.status');
+
+        Route::resource('siswa', SiswaController::class)
+            ->parameters(['siswa' => 'siswa'])
+            ->except(['show', 'destroy']);
+        Route::patch('siswa/{siswa}/status', [SiswaController::class, 'ubahStatus'])->name('siswa.status');
     });
 
     Route::middleware('role:kepala_sekolah')->prefix('kepala-sekolah')->name('kepsek.')->group(function () {
