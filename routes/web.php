@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\HariController;
+use App\Http\Controllers\Admin\KelasController;
+use App\Http\Controllers\Admin\MataPelajaranController;
 use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\DashboardController;
@@ -35,6 +37,16 @@ Route::middleware(['auth', 'active'])->group(function () {
         Route::resource('semester', SemesterController::class)->except(['show']);
         Route::patch('semester/{semester}/aktifkan', [SemesterController::class, 'aktifkan'])
             ->name('semester.aktifkan');
+
+        // A2.2: mata pelajaran
+        Route::resource('mata-pelajaran', MataPelajaranController::class)
+            ->parameters(['mata-pelajaran' => 'mataPelajaran'])
+            ->except(['show']);
+
+        // A2.1: kelas (parameter ditulis eksplisit karena Laravel menyingkat 'kelas' menjadi 'kela')
+        Route::resource('kelas', KelasController::class)
+            ->parameters(['kelas' => 'kelas'])
+            ->except(['show']);
     });
 
     Route::middleware('role:kepala_sekolah')->prefix('kepala-sekolah')->name('kepsek.')->group(function () {

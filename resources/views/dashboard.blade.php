@@ -22,6 +22,11 @@
                         <a href="{{ route('admin.hari.index') }}"
                             class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Hari
                             Aktif</a>
+                        <a href="{{ route('admin.kelas.index') }}"
+                            class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Kelas</a>
+                        <a href="{{ route('admin.mata-pelajaran.index') }}"
+                            class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Mata
+                            Pelajaran</a>
                     </div>
                     @endrole
                     </p>
