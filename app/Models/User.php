@@ -40,4 +40,25 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notifikasi::class, 'user_id');
     }
+
+    /** Nama route dashboard sesuai role berprioritas tertinggi milik akun. */
+    public function dashboardRouteName(): string
+    {
+        $peta = [
+            'super_admin' => 'admin.dashboard',
+            'kepala_sekolah' => 'kepsek.dashboard',
+            'wali_kelas' => 'walikelas.dashboard',
+            'guru' => 'guru.dashboard',
+            'siswa' => 'siswa.dashboard',
+            'bendahara' => 'bendahara.dashboard',
+        ];
+
+        foreach ($peta as $role => $route) {
+            if ($this->hasRole($role)) {
+                return $route;
+            }
+        }
+
+        return 'profile.edit';
+    }
 }
