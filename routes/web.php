@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\HariController;
+use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +20,21 @@ Route::middleware(['auth', 'active'])->group(function () {
 
     Route::middleware('role:super_admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'admin'])->name('dashboard');
+
+        // A1: tahun ajaran dan hari aktif belajar
+        Route::resource('tahun-ajaran', TahunAjaranController::class)
+            ->parameters(['tahun-ajaran' => 'tahunAjaran'])
+            ->except(['show']);
+        Route::patch('tahun-ajaran/{tahunAjaran}/aktifkan', [TahunAjaranController::class, 'aktifkan'])
+            ->name('tahun-ajaran.aktifkan');
+
+        Route::get('hari', [HariController::class, 'index'])->name('hari.index');
+        Route::put('hari', [HariController::class, 'update'])->name('hari.update');
+
+        // A3: semester
+        Route::resource('semester', SemesterController::class)->except(['show']);
+        Route::patch('semester/{semester}/aktifkan', [SemesterController::class, 'aktifkan'])
+            ->name('semester.aktifkan');
     });
 
     Route::middleware('role:kepala_sekolah')->prefix('kepala-sekolah')->name('kepsek.')->group(function () {

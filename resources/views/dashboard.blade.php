@@ -12,6 +12,18 @@
                     <p>Selamat datang, <span class="font-semibold">{{ auth()->user()->name }}</span>.</p>
                     <p class="text-sm text-gray-500 mt-1">
                         Peran Anda: {{ auth()->user()->getRoleNames()->implode(', ') }}
+                        @role('super_admin')
+                    <div class="mt-4 flex flex-wrap gap-2 text-sm">
+                        <a href="{{ route('admin.tahun-ajaran.index') }}"
+                            class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Tahun
+                            Ajaran</a>
+                        <a href="{{ route('admin.semester.index') }}"
+                            class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Semester</a>
+                        <a href="{{ route('admin.hari.index') }}"
+                            class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Hari
+                            Aktif</a>
+                    </div>
+                    @endrole
                     </p>
                 </div>
             </div>
