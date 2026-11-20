@@ -32,6 +32,9 @@
                             <a href="{{ route('admin.penugasan.index') }}"
                                 class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Penugasan
                                 Guru</a>
+                            <a href="{{ route('admin.jadwal.index') }}"
+                                class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Jadwal
+                                Pelajaran</a>
                             <a href="{{ route('admin.guru.index') }}"
                                 class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Akun
                                 Guru</a>

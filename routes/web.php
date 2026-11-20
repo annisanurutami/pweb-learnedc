@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\GuruMapelController;
 use App\Http\Controllers\Admin\HariController;
+use App\Http\Controllers\Admin\JadwalPelajaranController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\MataPelajaranController;
 use App\Http\Controllers\Admin\SemesterController;
@@ -62,9 +63,14 @@ Route::middleware(['auth', 'active'])->group(function () {
             ->except(['show', 'destroy']);
         Route::patch('siswa/{siswa}/status', [SiswaController::class, 'ubahStatus'])->name('siswa.status');
 
-        // A2.3 (bagian 1): penugasan guru ke mapel dan kelas
+        // A2.3 bagian 1: penugasan guru ke mapel dan kelas
         Route::resource('penugasan', GuruMapelController::class)
             ->parameters(['penugasan' => 'penugasan'])
+            ->except(['show']);
+
+        // A2.3 bagian 2: jadwal pelajaran (hari dan jam per penugasan)
+        Route::resource('jadwal', JadwalPelajaranController::class)
+            ->parameters(['jadwal' => 'jadwal'])
             ->except(['show']);
     });
 
