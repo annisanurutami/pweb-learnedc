@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Guru\KelasSayaController;
+use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -89,6 +90,15 @@ Route::middleware(['auth', 'active'])->group(function () {
         // C1: kelas dan mapel yang diampu. Fitur guru lain bernaung di bawah kelas/{penugasan}.
         Route::get('kelas', [KelasSayaController::class, 'index'])->name('kelas.index');
         Route::get('kelas/{penugasan}', [KelasSayaController::class, 'show'])->name('kelas.show');
+
+        // C2: materi per kelas dan mapel
+        Route::get('kelas/{penugasan}/materi', [MateriController::class, 'index'])->name('materi.index');
+        Route::get('kelas/{penugasan}/materi/create', [MateriController::class, 'create'])->name('materi.create');
+        Route::post('kelas/{penugasan}/materi', [MateriController::class, 'store'])->name('materi.store');
+        Route::get('kelas/{penugasan}/materi/{materi}/edit', [MateriController::class, 'edit'])->name('materi.edit');
+        Route::put('kelas/{penugasan}/materi/{materi}', [MateriController::class, 'update'])->name('materi.update');
+        Route::delete('kelas/{penugasan}/materi/{materi}', [MateriController::class, 'destroy'])->name('materi.destroy');
+        Route::get('kelas/{penugasan}/materi/{materi}/unduh', [MateriController::class, 'unduh'])->name('materi.unduh');
     });
 
     Route::middleware('role:siswa')->prefix('siswa')->name('siswa.')->group(function () {

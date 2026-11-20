@@ -59,6 +59,9 @@ class KelasSayaController extends Controller
             'semester' => $semester,
             'jadwal' => $jadwal,
             'jumlahSiswa' => $penugasan->kelas->kelasSiswa()->count(),
+            'jumlahMateri' => $semester
+                ? $penugasan->materi()->where('semester_id', $semester->id)->count()
+                : 0,
         ]);
     }
 

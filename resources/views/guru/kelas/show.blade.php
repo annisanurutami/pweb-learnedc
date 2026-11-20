@@ -42,8 +42,18 @@
                 </div>
             </div>
 
+            <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                <h3 class="text-sm font-semibold text-gray-900">Menu kelas</h3>
+                <div class="mt-3 flex flex-wrap gap-2 text-sm">
+                    <a href="{{ route('guru.materi.index', $penugasan) }}"
+                       class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">
+                        Materi ({{ $jumlahMateri }})
+                    </a>
+                </div>
+            </div>
+
             <p class="text-xs text-gray-400">
-                Menu materi, tugas, ujian, dan absensi untuk kelas ini ditambahkan pada langkah berikutnya.
+                Menu tugas, ujian, dan absensi untuk kelas ini ditambahkan pada langkah berikutnya.
             </p>
         </div>
     </div>
