@@ -34,7 +34,7 @@ class TugasController extends Controller
         $daftar = $semester
             ? $penugasan->tugas()
                 ->where('semester_id', $semester->id)
-                ->withCount('pengumpulan')
+                ->withCount(['pengumpulan' => fn ($q) => $q->whereNotNull('submitted_at')])
                 ->orderByDesc('deadline')
                 ->orderByDesc('id')
                 ->get()

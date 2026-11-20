@@ -61,6 +61,8 @@
                                     <td class="px-4 py-3 text-gray-700">{{ $t->pengumpulan_count }} / {{ $jumlahSiswa }}</td>
                                     <td class="px-4 py-3">
                                         <div class="flex flex-wrap gap-3">
+                                            <a href="{{ route('guru.nilai.index', ['penugasan' => $penugasan, 'tugas' => $t]) }}"
+                                               class="text-indigo-700 hover:underline">Nilai</a>
                                             @if ($t->file_path)
                                                 <a href="{{ route('guru.tugas.lampiran', ['penugasan' => $penugasan, 'tugas' => $t]) }}"
                                                    class="text-indigo-700 hover:underline">Lampiran</a>

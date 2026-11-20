@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Guru\KelasSayaController;
 use App\Http\Controllers\Guru\MateriController;
+use App\Http\Controllers\Guru\NilaiTugasController;
 use App\Http\Controllers\Guru\TugasController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -109,6 +110,11 @@ Route::middleware(['auth', 'active'])->group(function () {
         Route::put('kelas/{penugasan}/tugas/{tugas}', [TugasController::class, 'update'])->name('tugas.update');
         Route::delete('kelas/{penugasan}/tugas/{tugas}', [TugasController::class, 'destroy'])->name('tugas.destroy');
         Route::get('kelas/{penugasan}/tugas/{tugas}/lampiran', [TugasController::class, 'lampiran'])->name('tugas.lampiran');
+
+        // C3.1 dan C3.2: nilai tugas
+        Route::get('kelas/{penugasan}/tugas/{tugas}/nilai', [NilaiTugasController::class, 'index'])->name('nilai.index');
+        Route::put('kelas/{penugasan}/tugas/{tugas}/nilai', [NilaiTugasController::class, 'update'])->name('nilai.update');
+        Route::get('kelas/{penugasan}/tugas/{tugas}/nilai/{siswa}/berkas', [NilaiTugasController::class, 'berkas'])->name('nilai.berkas');
     });
 
     Route::middleware('role:siswa')->prefix('siswa')->name('siswa.')->group(function () {
