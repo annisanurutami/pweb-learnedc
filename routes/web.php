@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Guru\KelasSayaController;
 use App\Http\Controllers\Guru\MateriController;
+use App\Http\Controllers\Guru\TugasController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -99,6 +100,15 @@ Route::middleware(['auth', 'active'])->group(function () {
         Route::put('kelas/{penugasan}/materi/{materi}', [MateriController::class, 'update'])->name('materi.update');
         Route::delete('kelas/{penugasan}/materi/{materi}', [MateriController::class, 'destroy'])->name('materi.destroy');
         Route::get('kelas/{penugasan}/materi/{materi}/unduh', [MateriController::class, 'unduh'])->name('materi.unduh');
+
+        // C3: tugas per kelas dan mapel
+        Route::get('kelas/{penugasan}/tugas', [TugasController::class, 'index'])->name('tugas.index');
+        Route::get('kelas/{penugasan}/tugas/create', [TugasController::class, 'create'])->name('tugas.create');
+        Route::post('kelas/{penugasan}/tugas', [TugasController::class, 'store'])->name('tugas.store');
+        Route::get('kelas/{penugasan}/tugas/{tugas}/edit', [TugasController::class, 'edit'])->name('tugas.edit');
+        Route::put('kelas/{penugasan}/tugas/{tugas}', [TugasController::class, 'update'])->name('tugas.update');
+        Route::delete('kelas/{penugasan}/tugas/{tugas}', [TugasController::class, 'destroy'])->name('tugas.destroy');
+        Route::get('kelas/{penugasan}/tugas/{tugas}/lampiran', [TugasController::class, 'lampiran'])->name('tugas.lampiran');
     });
 
     Route::middleware('role:siswa')->prefix('siswa')->name('siswa.')->group(function () {
