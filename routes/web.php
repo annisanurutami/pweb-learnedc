@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\GuruController;
+use App\Http\Controllers\Admin\GuruMapelController;
 use App\Http\Controllers\Admin\HariController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\MataPelajaranController;
@@ -60,6 +61,11 @@ Route::middleware(['auth', 'active'])->group(function () {
             ->parameters(['siswa' => 'siswa'])
             ->except(['show', 'destroy']);
         Route::patch('siswa/{siswa}/status', [SiswaController::class, 'ubahStatus'])->name('siswa.status');
+
+        // A2.3 (bagian 1): penugasan guru ke mapel dan kelas
+        Route::resource('penugasan', GuruMapelController::class)
+            ->parameters(['penugasan' => 'penugasan'])
+            ->except(['show']);
     });
 
     Route::middleware('role:kepala_sekolah')->prefix('kepala-sekolah')->name('kepsek.')->group(function () {
