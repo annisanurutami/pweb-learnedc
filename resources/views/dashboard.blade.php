@@ -43,6 +43,14 @@
                                 Siswa</a>
                         </div>
                     @endrole
+
+                    @hasanyrole('guru|wali_kelas')
+                        <div class="mt-4 flex flex-wrap gap-2 text-sm">
+                            <a href="{{ route('guru.kelas.index') }}"
+                                class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Kelas
+                                Saya</a>
+                        </div>
+                    @endhasanyrole
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Guru\KelasSayaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -84,6 +85,10 @@ Route::middleware(['auth', 'active'])->group(function () {
 
     Route::middleware('role:guru|wali_kelas')->prefix('guru')->name('guru.')->group(function () {
         Route::get('/', [DashboardController::class, 'guru'])->name('dashboard');
+
+        // C1: kelas dan mapel yang diampu. Fitur guru lain bernaung di bawah kelas/{penugasan}.
+        Route::get('kelas', [KelasSayaController::class, 'index'])->name('kelas.index');
+        Route::get('kelas/{penugasan}', [KelasSayaController::class, 'show'])->name('kelas.show');
     });
 
     Route::middleware('role:siswa')->prefix('siswa')->name('siswa.')->group(function () {
