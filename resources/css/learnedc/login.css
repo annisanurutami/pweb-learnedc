@@ -1,0 +1,440 @@
+/* ==========================================================================
+   Learn's EDC - Login Page Stylesheet
+   File: css/login.css
+   Desain persis sesuai referensi mockup Learn's EDC
+   ========================================================================== */
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg-page: #f5f3f9;
+    --card-bg: #ffffff;
+    --card-border: #e3dded;
+    --primary-purple: #a358c2;
+    --primary-purple-hover: #9245b0;
+    --input-bg: #f2edf8;
+    --input-border: #d4c7e6;
+    --input-focus: #a358c2;
+    --text-label: #423a4d;
+    --text-placeholder: #9e94af;
+    --text-subtitle: #7d7589;
+    --text-footer: #8c829c;
+    --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--bg-page);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Label Kanvas / Header pojok kiri atas (LOGIN -runa) */
+.canvas-label {
+    position: fixed;
+    top: 18px;
+    left: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #9f98aa;
+    letter-spacing: 0.5px;
+    z-index: 10;
+    user-select: none;
+}
+
+/* ==========================================
+   Background Watermark Elemen
+   ========================================== */
+.bg-watermarks {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.watermark-item {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.15;
+    user-select: none;
+    pointer-events: none;
+}
+
+.watermark-item img {
+    width: 130px;
+    height: auto;
+    filter: contrast(95%);
+}
+
+.watermark-item span {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #7b6f8c;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+    white-space: nowrap;
+}
+
+/* Posisi watermark background sesuai gambar */
+.wm-top-left {
+    top: 5%;
+    left: 4%;
+    transform: rotate(-14deg);
+}
+
+.wm-bottom-left {
+    bottom: -3%;
+    left: 3%;
+    transform: rotate(-14deg);
+}
+
+.wm-right {
+    top: 12%;
+    right: -2%;
+    transform: rotate(34deg);
+}
+
+.wm-bottom-right {
+    bottom: 4%;
+    right: 14%;
+    transform: rotate(32deg);
+}
+
+/* ==========================================
+   Kartu Utama Login (Login Card)
+   ========================================== */
+.login-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 380px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(90, 70, 120, 0.05), 0 2px 8px rgba(0, 0, 0, 0.02);
+    padding: 38px 34px 28px 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Logo Box */
+.card-logo {
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.card-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Judul Brand dengan Gradient Ungu ke Oranye */
+.brand-title {
+    font-size: 1.38rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #9b8df7 0%, #cf84cf 50%, #f69a68 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+/* Subjudul */
+.brand-subtitle {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-subtitle);
+    line-height: 1.4;
+    margin-bottom: 26px;
+}
+
+/* Pesan Notifikasi Alert (Error / Success) */
+.alert {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    margin-bottom: 18px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-sizing: border-box;
+}
+
+.alert-error {
+    background-color: #fde8e8;
+    color: #9b1c1c;
+    border: 1px solid #f8b4b4;
+}
+
+.alert-success {
+    background-color: #edf7ed;
+    color: #1e4620;
+    border: 1px solid #b7dfb9;
+}
+
+/* ==========================================
+   Formulir & Input
+   ========================================== */
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.form-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-label);
+    margin-bottom: 7px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #2b2535;
+    background-color: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-input::placeholder {
+    color: var(--text-placeholder);
+    font-weight: 400;
+}
+
+.form-input:focus {
+    background-color: #ffffff;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(163, 88, 194, 0.15);
+}
+
+/* Tombol Submit Ungu */
+.btn-submit {
+    width: 100%;
+    margin-top: 6px;
+    padding: 13px 18px;
+    background-color: var(--primary-purple);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(163, 88, 194, 0.25);
+}
+
+.btn-submit:hover {
+    background-color: var(--primary-purple-hover);
+    box-shadow: 0 6px 16px rgba(163, 88, 194, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.btn-submit .btn-icon {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+/* ==========================================
+   Footer Kartu
+   ========================================== */
+.card-footer {
+    margin-top: 28px;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-footer);
+    letter-spacing: 0.1px;
+}
+
+/* ==========================================
+   Responsive
+   ========================================== */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 30px 22px 24px 22px;
+        border-radius: 16px;
+    }
+
+    .canvas-label {
+        font-size: 12px;
+        top: 12px;
+        left: 16px;
+    }
+
+    .watermark-item {
+        opacity: 0.08;
+    }
+}
+
+/* A brighter welcome screen that matches the purple dashboard theme. */
+body {
+    background-color: #f5effb;
+    background-image:
+        radial-gradient(circle at 12% 18%, rgba(173, 125, 213, .24) 0 2px, transparent 3px),
+        radial-gradient(circle at 84% 78%, rgba(173, 125, 213, .22) 0 3px, transparent 4px),
+        radial-gradient(ellipse at 15% 10%, #eee1fa 0, transparent 34%),
+        radial-gradient(ellipse at 90% 92%, #eadcf7 0, transparent 35%);
+}
+
+.bg-watermarks {
+    background:
+        radial-gradient(circle at 50% 12%, rgba(255, 255, 255, .5) 0 2px, transparent 3px),
+        radial-gradient(circle at 88% 40%, rgba(255, 255, 255, .55) 0 3px, transparent 4px);
+}
+
+.watermark-item {
+    opacity: .1;
+}
+
+.watermark-item span {
+    color: #6d4b86;
+}
+
+.login-card {
+    max-width: 420px;
+    padding: 36px 36px 27px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 26px;
+    background: linear-gradient(150deg, rgba(255, 255, 255, .98), rgba(252, 247, 255, .96));
+    box-shadow: 0 22px 60px rgba(86, 47, 119, .16), 0 4px 12px rgba(86, 47, 119, .06);
+}
+
+.login-card::before {
+    position: absolute;
+    top: -76px;
+    right: -64px;
+    width: 164px;
+    height: 164px;
+    border: 1px solid rgba(153, 101, 190, .14);
+    border-radius: 50%;
+    box-shadow: 0 0 0 14px rgba(153, 101, 190, .055), 0 0 0 31px rgba(153, 101, 190, .035);
+    content: "";
+    pointer-events: none;
+}
+
+.card-logo {
+    position: relative;
+    z-index: 1;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #eee3f6;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #fff, #f7effc);
+    box-shadow: 0 8px 20px rgba(102, 62, 137, .1);
+}
+
+.brand-title {
+    background: linear-gradient(90deg, #71419c, #a66bc7 72%, #c07ac2);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.brand-subtitle {
+    max-width: 280px;
+    line-height: 1.65;
+}
+
+.form-label {
+    color: #554464;
+}
+
+.form-input {
+    min-height: 46px;
+    border-color: #e3d7ee;
+    border-radius: 13px;
+    background: #fbf8fe;
+}
+
+.form-input:focus {
+    border-color: #9560b8;
+    box-shadow: 0 0 0 4px rgba(149, 96, 184, .13);
+}
+
+.btn-submit {
+    min-height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(120deg, #a46ac7, #75409e);
+    box-shadow: 0 8px 18px rgba(117, 64, 158, .25);
+}
+
+.btn-submit:hover {
+    background: linear-gradient(120deg, #9a5fbd, #67358f);
+    box-shadow: 0 11px 22px rgba(117, 64, 158, .32);
+}
+
+.btn-submit:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+    transform: none;
+}
+
+.card-footer {
+    line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 30px 23px 24px;
+        border-radius: 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
