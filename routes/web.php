@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Guru\AbsensiSiswaController;
 use App\Http\Controllers\Guru\KelasSayaController;
 use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\NilaiTugasController;
@@ -115,6 +116,10 @@ Route::middleware(['auth', 'active'])->group(function () {
         Route::get('kelas/{penugasan}/tugas/{tugas}/nilai', [NilaiTugasController::class, 'index'])->name('nilai.index');
         Route::put('kelas/{penugasan}/tugas/{tugas}/nilai', [NilaiTugasController::class, 'update'])->name('nilai.update');
         Route::get('kelas/{penugasan}/tugas/{tugas}/nilai/{siswa}/berkas', [NilaiTugasController::class, 'berkas'])->name('nilai.berkas');
+
+        // C5: absensi siswa per pertemuan
+        Route::get('kelas/{penugasan}/absensi', [AbsensiSiswaController::class, 'index'])->name('absensi.index');
+        Route::put('kelas/{penugasan}/absensi', [AbsensiSiswaController::class, 'update'])->name('absensi.update');
     });
 
     Route::middleware('role:siswa')->prefix('siswa')->name('siswa.')->group(function () {

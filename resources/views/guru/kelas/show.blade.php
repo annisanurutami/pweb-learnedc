@@ -53,11 +53,15 @@
                        class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">
                         Tugas ({{ $jumlahTugas }})
                     </a>
+                    <a href="{{ route('guru.absensi.index', $penugasan) }}"
+                       class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100">
+                        Absensi
+                    </a>
                 </div>
             </div>
 
             <p class="text-xs text-gray-400">
-                Menu nilai, ujian, dan absensi untuk kelas ini ditambahkan pada langkah berikutnya.
+                Menu ujian untuk kelas ini ditambahkan jika waktu mencukupi.
             </p>
         </div>
     </div>
