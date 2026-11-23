@@ -1,0 +1,196 @@
+/* ==========================================================================
+   Learn's EDC - Jembatan desain
+   Menyelaraskan isi halaman yang masih memakai kelas Tailwind (tabel, form,
+   kartu, tombol) dengan tampilan desain, tanpa perlu membangun ulang Tailwind.
+   Dimuat setelah admin.css dan app.css, jadi aturan di sini yang menang.
+   ========================================================================== */
+
+/* ---------- Kerangka ---------- */
+.navbar-admin { isolation: isolate; }
+.sidebar-admin { flex-shrink: 0; overflow-y: auto; scrollbar-width: thin; }
+.sidebar-admin > * { flex-shrink: 0; }
+
+.sidebar-link:focus-visible {
+    outline: 3px solid rgba(135, 69, 173, .25);
+    outline-offset: 2px;
+}
+
+button.sidebar-link {
+    width: 100%;
+    border: 0;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.profile-display {
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+button.dropdown-item {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.profile-section { position: relative; }
+.logout-dialog form { display: contents; }
+
+/* Modal Alpine bawaan Breeze harus berada di atas navbar */
+.fixed.inset-0.z-50 { z-index: 300; }
+
+/* ---------- Banner judul halaman ---------- */
+.banner-slot { flex: 1; min-width: 0; }
+
+/* Slot header tiap halaman menjadi judul putih, seperti .banner-title pada desain */
+.banner-slot h2 {
+    color: #fff;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: .1px;
+    line-height: 1.25;
+}
+
+.banner-slot a { color: rgba(255, 255, 255, .9); font-size: 13px; font-weight: 600; }
+.banner-slot a:hover { color: #fff; text-decoration: underline; }
+
+/* Tombol aksi di banner (mis. "Tambah") menjadi tombol putih agar terbaca di atas ungu */
+.banner-slot a.bg-gray-800,
+.banner-slot .bg-gray-800 {
+    background: #fff;
+    color: #74409a;
+    border-radius: 12px;
+    box-shadow: 0 6px 14px rgba(54, 25, 82, .18);
+}
+
+.banner-slot a.bg-gray-800:hover,
+.banner-slot .bg-gray-800:hover {
+    background: #f7eefb;
+    color: #5d2f80;
+    text-decoration: none;
+    filter: none;
+}
+
+/* ---------- Isi halaman ---------- */
+.app-slot { display: block; min-width: 0; }
+
+/* Pembungkus lama (py-*, max-w-*, px-*) tidak perlu lagi memberi jarak sendiri */
+.app-slot > div[class*="py-"] { padding-top: 0; padding-bottom: 0; }
+.app-slot .max-w-7xl,
+.app-slot .max-w-4xl { max-width: none; }
+.app-slot [class*="max-w-"][class*="mx-auto"] { padding-left: 0; padding-right: 0; }
+.app-slot [class*="max-w-"][class*="mx-auto"].max-w-xl,
+.app-slot [class*="max-w-"][class*="mx-auto"].max-w-2xl { margin-left: 0; }
+
+/* Kartu putih */
+.admin-content .bg-white.shadow-sm,
+.admin-content .bg-white.shadow {
+    border: 1px solid var(--border-subtle);
+    border-radius: 18px;
+    box-shadow: var(--shadow-card);
+}
+
+/* Tabel */
+.admin-content table { width: 100%; }
+
+.admin-content thead.bg-gray-50,
+.admin-content .bg-gray-50 { background-color: #faf6fc; }
+
+.admin-content table th {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #7b4a97;
+}
+
+.admin-content table td { color: var(--text-primary); }
+
+/* Cadangan: jarak sel tabel tetap rapi walau build Tailwind belum diperbarui (npm run build) */
+.admin-content table th,
+.admin-content table td { padding: 12px 16px; vertical-align: middle; }
+.admin-content tbody tr:hover { background-color: #fdfafe; }
+.admin-content .divide-y > * + * { border-color: var(--border-subtle); }
+
+/* Tombol gelap Tailwind menjadi tombol ungu desain */
+.admin-content .bg-gray-800 {
+    background: linear-gradient(135deg, var(--purple-gradient-start), var(--purple-gradient-end));
+    border-color: transparent;
+    border-radius: 12px;
+    box-shadow: var(--shadow-purple);
+    transition: filter .18s ease, transform .18s ease;
+}
+
+.admin-content .bg-gray-800:hover,
+.admin-content .hover\:bg-gray-700:hover {
+    background: linear-gradient(135deg, #c86fda, #ae56c5);
+    filter: brightness(1.03);
+    transform: translateY(-1px);
+}
+
+/* Tautan dan lencana beraksen indigo menjadi ungu */
+.admin-content .text-indigo-700 { color: #8a3fa3; }
+.admin-content .text-indigo-700:hover { color: #6f2f88; }
+.admin-content .bg-indigo-50 { background-color: var(--purple-light); }
+.admin-content .bg-indigo-50.text-indigo-700 { color: #74409a; font-weight: 700; }
+.admin-content .hover\:bg-indigo-100:hover { background-color: #ecd8f5; }
+
+/* Isian formulir */
+.admin-content input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="submit"]),
+.admin-content textarea {
+    min-height: 42px;
+    padding: 9px 14px;
+    border: 1px solid #e4d7ed;
+    border-radius: 12px;
+    background-color: #fff;
+    color: #493652;
+    font-size: 14px;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.admin-content input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="submit"]):focus,
+.admin-content textarea:focus {
+    outline: none;
+    border-color: var(--purple-primary);
+    box-shadow: 0 0 0 3px rgba(166, 79, 189, .16);
+}
+
+.admin-content input[type="checkbox"],
+.admin-content input[type="radio"] {
+    color: var(--purple-primary);
+    border-color: #cbb8d8;
+}
+
+.admin-content input[type="checkbox"]:focus,
+.admin-content input[type="radio"]:focus {
+    --tw-ring-color: rgba(166, 79, 189, .35);
+    border-color: var(--purple-primary);
+}
+
+.admin-content input[type="file"] { font-size: 13px; color: var(--text-secondary); }
+
+.admin-content input[type="file"]::file-selector-button {
+    margin-right: 12px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--purple-light);
+    color: #74409a;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-content label.block,
+.admin-content .block.font-medium.text-sm { color: var(--text-secondary); font-weight: 700; }
+
+/* Pesan galat Breeze */
+.admin-content ul.text-red-600 { font-size: 12.5px; font-weight: 600; }
+
+/* Ringkasan <details> pada jawaban teks siswa */
+.admin-content details summary { font-weight: 700; }
