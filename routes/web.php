@@ -16,9 +16,11 @@ use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\NilaiTugasController;
 use App\Http\Controllers\Guru\TugasController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Siswa\MateriSiswaController;
+use App\Http\Controllers\Siswa\TugasSiswaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => redirect()->route('dashboard'));
+Route::get('/', fn() => redirect()->route('dashboard'));
 
 Route::middleware(['auth', 'active'])->group(function () {
     // Login tunggal: semua role masuk lewat sini, lalu diarahkan sesuai role.
@@ -124,6 +126,17 @@ Route::middleware(['auth', 'active'])->group(function () {
 
     Route::middleware('role:siswa')->prefix('siswa')->name('siswa.')->group(function () {
         Route::get('/', [DashboardController::class, 'siswa'])->name('dashboard');
+
+        // E3 dan E5: tugas dan pengumpulan jawaban
+        Route::get('tugas', [TugasSiswaController::class, 'index'])->name('tugas.index');
+        Route::get('tugas/{tugas}', [TugasSiswaController::class, 'show'])->name('tugas.show');
+        Route::put('tugas/{tugas}/jawaban', [TugasSiswaController::class, 'kumpul'])->name('tugas.kumpul');
+        Route::get('tugas/{tugas}/lampiran', [TugasSiswaController::class, 'lampiran'])->name('tugas.lampiran');
+        Route::get('tugas/{tugas}/jawaban/unduh', [TugasSiswaController::class, 'jawaban'])->name('tugas.jawaban');
+
+        // Materi dari guru
+        Route::get('materi', [MateriSiswaController::class, 'index'])->name('materi.index');
+        Route::get('materi/{materi}/unduh', [MateriSiswaController::class, 'unduh'])->name('materi.unduh');
     });
 
     Route::middleware('role:bendahara')->prefix('bendahara')->name('bendahara.')->group(function () {
@@ -131,4 +144,4 @@ Route::middleware(['auth', 'active'])->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

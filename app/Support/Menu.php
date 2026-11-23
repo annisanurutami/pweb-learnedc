@@ -59,7 +59,12 @@ class Menu
             ],
         ],
         'bendahara' => [],
-        'siswa' => [],
+        'siswa' => [
+            'MENU UTAMA' => [
+                ['Materi', 'fa-book-open', 'siswa.materi.index', ['siswa.materi.*']],
+                ['Tugas', 'fa-list-check', 'siswa.tugas.index', ['siswa.tugas.*']],
+            ],
+        ],
     ];
 
     /**
@@ -84,7 +89,7 @@ class Menu
         $peran = 'Pengguna';
 
         foreach (self::ROLE as $kode => $label) {
-            if (! $user->hasRole($kode)) {
+            if (!$user->hasRole($kode)) {
                 continue;
             }
 
@@ -97,9 +102,9 @@ class Menu
                     $seksi[$judul] ??= [];
 
                     // Role rangkap (misalnya guru dan wali kelas) tidak boleh menggandakan item.
-                    $sudahAda = collect($seksi)->flatten(1)->contains(fn ($i) => $i !== null && $i['rute'] === $rute);
+                    $sudahAda = collect($seksi)->flatten(1)->contains(fn($i) => $i !== null && $i['rute'] === $rute);
 
-                    if (! $sudahAda) {
+                    if (!$sudahAda) {
                         $seksi[$judul][] = self::item($teks, $ikon, $rute, $pola);
                     }
                 }
@@ -139,7 +144,7 @@ class Menu
      */
     private static function item(string $label, string $ikon, string $rute, array $pola): ?array
     {
-        if (! Route::has($rute)) {
+        if (!Route::has($rute)) {
             return null;
         }
 
