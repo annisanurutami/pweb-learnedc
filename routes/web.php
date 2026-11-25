@@ -16,11 +16,13 @@ use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\NilaiTugasController;
 use App\Http\Controllers\Guru\TugasController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Siswa\KehadiranSiswaController;
 use App\Http\Controllers\Siswa\MateriSiswaController;
+use App\Http\Controllers\Siswa\NilaiSiswaController;
 use App\Http\Controllers\Siswa\TugasSiswaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn() => redirect()->route('dashboard'));
+Route::get('/', fn () => redirect()->route('dashboard'));
 
 Route::middleware(['auth', 'active'])->group(function () {
     // Login tunggal: semua role masuk lewat sini, lalu diarahkan sesuai role.
@@ -137,6 +139,10 @@ Route::middleware(['auth', 'active'])->group(function () {
         // Materi dari guru
         Route::get('materi', [MateriSiswaController::class, 'index'])->name('materi.index');
         Route::get('materi/{materi}/unduh', [MateriSiswaController::class, 'unduh'])->name('materi.unduh');
+
+        // E1: kehadiran dan nilai
+        Route::get('kehadiran', [KehadiranSiswaController::class, 'index'])->name('kehadiran.index');
+        Route::get('nilai', [NilaiSiswaController::class, 'index'])->name('nilai.index');
     });
 
     Route::middleware('role:bendahara')->prefix('bendahara')->name('bendahara.')->group(function () {
@@ -144,4 +150,4 @@ Route::middleware(['auth', 'active'])->group(function () {
     });
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

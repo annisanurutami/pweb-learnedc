@@ -10,6 +10,10 @@ use App\Models\KelasSiswa;
 use App\Models\MataPelajaran;
 use App\Models\Semester;
 use App\Models\Siswa;
+use App\Models\Tugas;
+use App\Services\PerhitunganNilai;
+use App\Services\RekapKehadiran;
+use App\Support\Angka;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -77,31 +81,33 @@ class DashboardController extends Controller
     {
         $semester = $this->semesterAktif();
         $siswa = auth()->user()->siswa;
+        $kelas = $this->kelasSiswa($siswa, $semester);
 
-        $kelas = null;
-        if ($siswa && $semester) {
-            $kelas = Kelas::where('tahun_ajaran_id', $semester->tahun_ajaran_id)
-                ->whereIn('id', KelasSiswa::where('siswa_id', $siswa->id)->select('kelas_id'))
-                ->first();
+        $statistik = [
+            $this->stat('Kelas', $kelas?->nama_kelas ?? '-', 'Tahun ajaran berjalan'),
+        ];
+
+        if ($siswa && $semester && $kelas) {
+            $ringkasan = app(PerhitunganNilai::class)->ringkasanSiswa($siswa, $semester, $kelas);
+            $rataRata = app(PerhitunganNilai::class)->rataRata($ringkasan);
+            $kehadiran = app(RekapKehadiran::class)->siswa($siswa, $semester);
+
+            $statistik[] = $this->stat(
+                'Kehadiran',
+                $kehadiran['persen'] !== null ? Angka::nilai($kehadiran['persen'], 1) . '%' : '-',
+                $kehadiran['total'] . ' pertemuan tercatat'
+            );
+            $statistik[] = $this->stat('Rata-rata nilai', Angka::nilai($rataRata), 'Semester berjalan');
+            $statistik[] = $this->stat('Tugas terbuka', $this->tugasTerbuka($siswa, $semester, $kelas), 'Belum dikumpulkan');
         }
 
-        return $this->tampil('Dashboard Siswa', 'DASHBOARD SISWA', $semester, [
-            $this->stat('Kelas', $kelas?->nama_kelas ?? '-', 'Tahun ajaran berjalan'),
-            $this->stat('NIS', $siswa?->nis ?? '-', 'Nomor induk siswa'),
-        ]);
+        return $this->tampil('Dashboard Siswa', 'DASHBOARD SISWA', $semester, $statistik);
     }
 
     public function bendahara(): View
     {
         $semester = $this->semesterAktif();
-        $siswa = auth()->user()->siswa;
-
-        $kelas = null;
-        if ($siswa && $semester) {
-            $kelas = Kelas::where('tahun_ajaran_id', $semester->tahun_ajaran_id)
-                ->whereIn('id', KelasSiswa::where('siswa_id', $siswa->id)->select('kelas_id'))
-                ->first();
-        }
+        $kelas = $this->kelasSiswa(auth()->user()->siswa, $semester);
 
         return $this->tampil('Dashboard Bendahara', 'PORTAL BENDAHARA KELAS', $semester, [
             $this->stat('Kelas', $kelas?->nama_kelas ?? '-', 'Tahun ajaran berjalan'),
@@ -144,13 +150,36 @@ class DashboardController extends Controller
 
     private function kelasWali(?Guru $guru, ?Semester $semester): ?Kelas
     {
-        if (! $guru || ! $semester) {
+        if (!$guru || !$semester) {
             return null;
         }
 
         return Kelas::where('wali_kelas_id', $guru->id)
             ->where('tahun_ajaran_id', $semester->tahun_ajaran_id)
             ->first();
+    }
+
+    private function kelasSiswa(?Siswa $siswa, ?Semester $semester): ?Kelas
+    {
+        if (!$siswa || !$semester) {
+            return null;
+        }
+
+        return Kelas::where('tahun_ajaran_id', $semester->tahun_ajaran_id)
+            ->whereIn('id', KelasSiswa::where('siswa_id', $siswa->id)->select('kelas_id'))
+            ->first();
+    }
+
+    /** Tugas yang masih terbuka dan belum dikumpulkan siswa. */
+    private function tugasTerbuka(Siswa $siswa, Semester $semester, Kelas $kelas): int
+    {
+        return Tugas::where('semester_id', $semester->id)
+            ->where('deadline', '>', now())
+            ->whereHas('guruMapel', fn($q) => $q->where('kelas_id', $kelas->id))
+            ->whereDoesntHave('pengumpulan', fn($q) => $q
+                ->where('siswa_id', $siswa->id)
+                ->whereNotNull('submitted_at'))
+            ->count();
     }
 
     /**
@@ -165,12 +194,12 @@ class DashboardController extends Controller
 
         if ($guru && $semester) {
             $diampu = GuruMapel::where('guru_id', $guru->id)
-                ->whereHas('kelas', fn ($q) => $q->where('tahun_ajaran_id', $semester->tahun_ajaran_id))
+                ->whereHas('kelas', fn($q) => $q->where('tahun_ajaran_id', $semester->tahun_ajaran_id))
                 ->count();
 
             $hariIni = JadwalPelajaran::where('semester_id', $semester->id)
-                ->whereHas('guruMapel', fn ($q) => $q->where('guru_id', $guru->id))
-                ->whereHas('hari', fn ($q) => $q->where('urutan', now()->dayOfWeekIso))
+                ->whereHas('guruMapel', fn($q) => $q->where('guru_id', $guru->id))
+                ->whereHas('hari', fn($q) => $q->where('urutan', now()->dayOfWeekIso))
                 ->count();
         }
 

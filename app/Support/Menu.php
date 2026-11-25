@@ -63,6 +63,8 @@ class Menu
             'MENU UTAMA' => [
                 ['Materi', 'fa-book-open', 'siswa.materi.index', ['siswa.materi.*']],
                 ['Tugas', 'fa-list-check', 'siswa.tugas.index', ['siswa.tugas.*']],
+                ['Kehadiran', 'fa-clipboard-user', 'siswa.kehadiran.index', ['siswa.kehadiran.*']],
+                ['Nilai', 'fa-chart-line', 'siswa.nilai.index', ['siswa.nilai.*']],
             ],
         ],
     ];
