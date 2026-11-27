@@ -15,6 +15,8 @@ use App\Http\Controllers\Guru\KelasSayaController;
 use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\NilaiTugasController;
 use App\Http\Controllers\Guru\TugasController;
+use App\Http\Controllers\Kepsek\BerandaController;
+use App\Http\Controllers\Kepsek\NilaiKelasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Siswa\KehadiranSiswaController;
 use App\Http\Controllers\Siswa\MateriSiswaController;
@@ -22,7 +24,7 @@ use App\Http\Controllers\Siswa\NilaiSiswaController;
 use App\Http\Controllers\Siswa\TugasSiswaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => redirect()->route('dashboard'));
+Route::get('/', fn() => redirect()->route('dashboard'));
 
 Route::middleware(['auth', 'active'])->group(function () {
     // Login tunggal: semua role masuk lewat sini, lalu diarahkan sesuai role.
@@ -84,7 +86,12 @@ Route::middleware(['auth', 'active'])->group(function () {
     });
 
     Route::middleware('role:kepala_sekolah')->prefix('kepala-sekolah')->name('kepsek.')->group(function () {
-        Route::get('/', [DashboardController::class, 'kepsek'])->name('dashboard');
+        // Halaman utama: grafik keaktifan guru dan siswa (hanya membaca data)
+        Route::get('/', [BerandaController::class, 'index'])->name('dashboard');
+
+        // B1 dan B2: rata-rata nilai per kelas dan mata pelajaran, serta laporan PDF
+        Route::get('nilai', [NilaiKelasController::class, 'index'])->name('nilai.index');
+        Route::get('nilai/pdf', [NilaiKelasController::class, 'pdf'])->name('nilai.pdf');
     });
 
     Route::middleware('role:wali_kelas')->prefix('wali-kelas')->name('walikelas.')->group(function () {
@@ -150,4 +157,4 @@ Route::middleware(['auth', 'active'])->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

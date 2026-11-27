@@ -47,7 +47,11 @@ class Menu
                 ['Akun Siswa', 'fa-user-graduate', 'admin.siswa.index', ['admin.siswa.*']],
             ],
         ],
-        'kepala_sekolah' => [],
+        'kepala_sekolah' => [
+            'MENU UTAMA' => [
+                ['Rata-rata Nilai', 'fa-chart-column', 'kepsek.nilai.index', ['kepsek.nilai.*']],
+            ],
+        ],
         'wali_kelas' => [
             'MENU UTAMA' => [
                 ['Kelas Saya', 'fa-school', 'guru.kelas.index', ['guru.kelas.*', 'guru.materi.*', 'guru.tugas.*', 'guru.nilai.*', 'guru.absensi.*']],
