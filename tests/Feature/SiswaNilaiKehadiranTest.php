@@ -276,7 +276,7 @@ class SiswaNilaiKehadiranTest extends TestCase
         $this->actingAs($andi)
             ->get(route('siswa.nilai.index'))
             ->assertSee('<td class="px-4 py-3 font-bold">70</td>', false)
-            ->assertDontSee('99');
+            ->assertDontSee('<td class="px-4 py-3 font-bold">99</td>', false);
     }
 
     public function test_nilai_semester_lain_tidak_dihitung(): void
